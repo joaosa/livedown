@@ -16,8 +16,8 @@
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^2.5.3",
-    "zombie": "^2.5.1"
+    "mocha": "^3.2.0",
+    "zombie": "^5.0.5"
   },
   "optionalDependencies": {
     "fsevents": "*"
@@ -26,7 +26,7 @@
     "livedown": "bin/livedown"
   },
   "scripts": {
-    "test": "node ./node_modules/.bin/mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
