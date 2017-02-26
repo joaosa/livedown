@@ -4,19 +4,17 @@ var expect  = require('expect.js'),
     fs      = require('fs')
 
 Browser.localhost('localhost', 1337)
+const browser = new Browser()
 
 describe('livedown', function(){
-  before(function(){
-    server.start('test/fixtures/basic.md')
-  })
-
   before(function(done){
-    this.browser = Browser.create()
-    this.browser.visit('/', done)
+    server.start('test/fixtures/basic.md', () => {
+      browser.visit('/', done)
+    })
   })
 
   it('renders markdown correctly', function(done){
-    expect(this.browser.window.$(".markdown-body h1").text()).to.be('h1')
+    expect(browser.window.$(".markdown-body h1").text()).to.be('h1')
     done()
   })
 
@@ -29,20 +27,12 @@ describe('livedown', function(){
         if (error) { return done(error) }
 
         fixtureContent = data;
-        done();
+        fs.writeFile(fixturePath, '## h2', () => browser.visit('/', done))
       })
     })
 
-    before(function(done) {
-      fs.writeFile(fixturePath, '## h2', done)
-    })
-
-    before(function(done) {
-      this.browser.visit('/', done)
-    })
-
     it('live updates the rendered markdown', function(done){
-      expect(this.browser.window.$(".markdown-body h2").text()).to.be('h2')
+      expect(browser.window.$(".markdown-body h2").text()).to.be('h2')
       done()
     })
 
